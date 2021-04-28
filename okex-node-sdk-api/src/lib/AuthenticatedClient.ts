@@ -507,6 +507,75 @@ export function AuthenticatedClient(
         },
         async getHolds(instrument_id: string): Promise<any> {
           return get(`/api/futures/v3/accounts/${instrument_id}/holds`);
+        },
+        async closePositon(params: {
+          readonly instrument_id: string;
+          readonly direction: string;      
+        }): Promise<any> {
+          return post('/api/futures/v3/close_position', params);
+        },
+        async postAlgoOrder(params:{
+          readonly instrument_id: string;
+          readonly type: string; 
+          readonly order_type: string; 
+          readonly size: number; 
+
+          readonly trigger_price?: number;
+          readonly price_limit?: number; 
+
+          readonly algo_price?: number; 
+          readonly algo_type?: number; 
+
+          readonly callback_rate?: number; 
+
+          readonly algo_variance?: number; 
+          readonly avg_amount?: number; 
+      
+
+          readonly sweep_range?: number; 
+          readonly sweep_ratio?: number; 
+          readonly single_limit?: number;
+          readonly time_interval?: number; 
+
+
+          readonly tp_trigger_price?: number; 
+          readonly tp_price?: number; 
+          readonly tp_trigger_type?: number; 
+
+          readonly sl_trigger_type?: number; 
+          readonly sl_trigger_price?: number; 
+          readonly sl_price?: number; 
+        }):Promise<any>{
+          return post('/api/futures/v3/order_algo',params);
+        },
+        async postCanceAlgo(params:{
+          readonly instrument_id: string;
+          readonly order_type: string;
+          readonly algo_ids?:string[];
+        }):Promise<any>{
+          return post('/api/futures/v3/cancel_algos',params);
+        },
+        async getAlgoOrder(
+          instrument_id: string,
+          params: {
+            readonly order_type: string;
+            readonly status?: string;
+            readonly algo_id?: string;
+            readonly before?: string;
+            readonly after?: string;
+            readonly limit?: string;
+          }
+        ): Promise<any> {
+          return get(
+            `/api/futures/v3/order_algo/${instrument_id}?` +
+              querystring.stringify(params)
+          );
+        },
+        async postCancelAll(params:{
+          readonly instrument_id: string;
+          readonly direction: string;
+        }):Promise<any>{
+          return post('/api/futures/v3/cancel_all',params);
         }
       };
     },
@@ -600,6 +669,75 @@ export function AuthenticatedClient(
           readonly limit?: string;
         }): Promise<any> {
           return get(`/api/swap/v3/fills?${querystring.stringify(params)}`);
+        },
+        async closePositon(params: {
+          readonly instrument_id: string;
+          readonly direction: string;      
+        }): Promise<any> {
+          return post('/api/swap/v3/close_position', params);
+        },
+        async postAlgoOrder(params:{
+          readonly instrument_id: string;
+          readonly type: string; 
+          readonly order_type: string; 
+          readonly size: number; 
+
+          readonly trigger_price?: number;
+          readonly price_limit?: number; 
+
+          readonly algo_price?: number; 
+          readonly algo_type?: number; 
+
+          readonly callback_rate?: number; 
+
+          readonly algo_variance?: number; 
+          readonly avg_amount?: number; 
+      
+
+          readonly sweep_range?: number; 
+          readonly sweep_ratio?: number; 
+          readonly single_limit?: number;
+          readonly time_interval?: number; 
+
+
+          readonly tp_trigger_price?: number; 
+          readonly tp_price?: number; 
+          readonly tp_trigger_type?: number; 
+
+          readonly sl_trigger_type?: number; 
+          readonly sl_trigger_price?: number; 
+          readonly sl_price?: number; 
+        }):Promise<any>{
+          return post('/api/swap/v3/order_algo',params);
+        },
+        async postCanceAlgo(params:{
+          readonly instrument_id: string;
+          readonly order_type: string;
+          readonly algo_ids?:string[];
+        }):Promise<any>{
+          return post('/api/swap/v3/cancel_algos',params);
+        },
+        async getAlgoOrder(
+          instrument_id: string,
+          params: {
+            readonly order_type: string;
+            readonly status?: string;
+            readonly algo_id?: string;
+            readonly before?: string;
+            readonly after?: string;
+            readonly limit?: string;
+          }
+        ): Promise<any> {
+          return get(
+            `/api/swap/v3/order_algo/${instrument_id}?` +
+              querystring.stringify(params)
+          );
+        },        
+        async postCancelAll(params:{
+          readonly instrument_id: string;
+          readonly direction: string;
+        }):Promise<any>{
+          return post('/api/swap/v3/cancel_all',params);
         }
       };
     },
